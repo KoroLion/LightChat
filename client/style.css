@@ -1,0 +1,9 @@
+body {
+    background-image: url('images/winter_wolves.png');
+    overflow-y: scroll;
+}
+
+div#messages {
+    height: 500px;
+    overflow-y: auto;
+}
