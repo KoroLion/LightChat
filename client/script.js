@@ -15,7 +15,7 @@ $(document).ready(function () {
         connected = true;
     }
     ws.onmessage = function (e) {
-        data = e.data.split(' ');
+        data = e.data.split(':');
         insertMessage(data[0], data[1]);
     }
     ws.onclose = function (e) {
@@ -28,7 +28,7 @@ $(document).ready(function () {
             message = $('#message-textarea').val();
             
             if (username && message) {
-                ws.send(username + ' ' + message);
+                ws.send(username + ':' + message);
                 $('#message-textarea').val('');
                 insertMessage(username, message, true);
             } 
