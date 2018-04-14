@@ -6,6 +6,10 @@
   "author": {
     "name": "KoroLion"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/KoroLion/LightChat.git"
+  },
   "scripts": {
     "start": "node ./index.js"
   },
