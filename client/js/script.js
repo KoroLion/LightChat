@@ -21,6 +21,16 @@ function getTime () {
     return h + ":" + m + ":" + s;
 }
 
+function getUsernameAndMessage(data) {
+    let res = [],
+        i = data.indexOf(';');
+
+    res[0] = data.substring(0, i);
+    res[1] = data.substring(i + 1, data.length);
+
+    return res;
+}
+
 function insertMessage (username, message, own=false) {
     let borderClass = 'border-secondary';
     if (own)
@@ -43,7 +53,7 @@ $(document).ready(function () {
         connected = true;
     }
     ws.onmessage = function (e) {
-        data = e.data.split(' ');
+        data = getUsernameAndMessage(e.data);
         insertMessage(data[0], data[1]);
     }
     ws.onclose = function (e) {
@@ -68,11 +78,16 @@ $(document).ready(function () {
 
     $('#send-btn').click(function() {
         if (connected) {
-            username = $('#username-input').val();
             message = $('#message-textarea').val();
 
-            if (username && message) {
-                ws.send(username + ' ' + message);
+            if ($('#username-input').val() && message) {
+                if (!username) {
+                    username = $('#username-input').val();
+                    $('#username-input').prop('readonly', true);
+                    ws.send(username);
+                }
+
+                ws.send(message);
                 $('#message-textarea').val('');
                 insertMessage(username, message, true);
             }
