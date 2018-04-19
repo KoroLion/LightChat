@@ -1,20 +1,13 @@
-const HTTP_PORT = 8080;
-const WS_PORT   = 8081;
-
-const express = require('express');
-const WebSocket = require('ws');
-
-//*** Web Server ***
-const app = express();
-
-app.use('/', express.static('client'));
-
-app.listen(HTTP_PORT, function () {
-    console.log('HTTP server started on port: %i', HTTP_PORT);
+const WebServer = require('exjs-simple-server');
+let webServer = WebServer.startServer({
+    httpPort: 8080,
 });
 
-//*** WebSocket Server ***
-const wss = new WebSocket.Server({port: WS_PORT});
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({
+    server: webServer,
+});
 
 let clients = [], id = 1, usernames = {};
 
@@ -56,4 +49,4 @@ wss.on('connection', function connection(ws) {
         removeClient(ws.id);
     });
 });
-console.log('WebSocket server started on port: %i', WS_PORT);
+console.log('WebSocket server started on port: %i', webServer.address().port);
