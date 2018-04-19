@@ -1,10 +1,6 @@
 const WebServer = require('exjs-simple-server');
 let webServer = WebServer.startServer({
     httpPort: 8080,
-    httpsPort: 8443,
-    sslKeyFile: 'F:/SelfSignedCert/key.pem',
-    sslCertFile: 'F:/SelfSignedCert/cert.pem',
-    httpRedirect: true
 });
 
 const WebSocket = require('ws');
